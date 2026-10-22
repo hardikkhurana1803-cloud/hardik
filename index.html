@@ -1811,9 +1811,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 
   /* ---------- boot ---------- */
   html.dataset.chapter = "world";
-  const deep = location.hash && location.hash.length > 1;
-  if (!deep && !store.get("entered")) showGate();
+  // Every load and refresh starts at the gate, at the top of the page.
+  // Only a shared link to a project (e.g. #air-india) skips straight to it.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const hashSlug = decodeURIComponent(location.hash.slice(1));
+  const deep = PROJECTS.some(p => p.slug === hashSlug);
   if (deep) route();
+  else {
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    scrollTo(0, 0);
+    showGate();
+  }
 })();
 </script>
 </body>
