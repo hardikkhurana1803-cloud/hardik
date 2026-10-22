@@ -461,6 +461,12 @@ window.UNIVERSE = {
   // Set to true to show the Experiments chapter (and its stop on the map) again
   showExperiments: true,
 
+  // The last card on the Experiments shelf: something still in the oven. Set to "" to hide it.
+  cookingNote: "New experiments are cooking. Check back soon.",
+
+  // Untitled placeholder pieces (entries with no image) stay hidden unless this is true
+  showPlaceholders: false,
+
   /* ---------- Chapter IV: Experiments ----------
      type   typography | photography | poster | study | motion | unreleased | packaging | sticker
      glyph  (typography only) the characters shown on the specimen

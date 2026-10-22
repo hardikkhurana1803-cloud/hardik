@@ -468,6 +468,25 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .artefact.has-set:focus-visible{outline:3px solid var(--acid);outline-offset:6px}
 .artefact .set-count{position:absolute;z-index:3;left:10px;bottom:10px;padding:4px 8px;background:rgba(8,6,28,.82);color:var(--bone);font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}
 .lb-note{display:block;margin-top:6px;color:var(--dim);font-size:.8rem}
+/* "cooking" card: an oven window with something bubbling inside */
+.a-cooking{width:clamp(220px,22vw,280px)}
+.a-cooking .am{aspect-ratio:1;display:grid;place-items:center;gap:0;background:radial-gradient(70% 60% at 50% 90%,rgba(255,90,31,.28),transparent 70%),#0b0820;border:2px dashed rgba(198,255,26,.45);box-shadow:none}
+.oven{position:relative;width:62%;margin-top:-14%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:7px solid var(--chrome);
+  background:radial-gradient(circle at 50% 75%,rgba(255,90,31,.85),rgba(139,61,255,.55) 45%,#120e3a 75%);
+  box-shadow:inset 0 0 30px rgba(0,0,0,.65),0 0 0 3px #3a3860,0 0 40px rgba(255,90,31,.35)}
+.oven::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 38%)}
+.oven i{position:absolute;bottom:-14px;width:var(--s,10px);height:var(--s,10px);border-radius:50%;border:2px solid var(--acid);background:rgba(198,255,26,.15);animation:bubble var(--t,2.6s) ease-in infinite;animation-delay:var(--d,0s)}
+.oven i:nth-child(1){left:22%;--s:12px;--t:2.8s}
+.oven i:nth-child(2){left:44%;--s:8px;--t:2.2s;--d:.7s}
+.oven i:nth-child(3){left:62%;--s:14px;--t:3.1s;--d:1.3s}
+.oven i:nth-child(4){left:34%;--s:6px;--t:2s;--d:1.8s}
+.oven i:nth-child(5){left:72%;--s:9px;--t:2.5s;--d:.4s}
+@keyframes bubble{70%{opacity:1}to{transform:translateY(-190px) translateX(6px);opacity:0}}
+.burner{position:absolute;left:50%;bottom:4%;width:38px;transform:translateX(-50%);fill:var(--ember);filter:drop-shadow(0 0 10px var(--ember));transform-origin:50% 100%;animation:flicker .45s ease-in-out infinite alternate}
+@keyframes flicker{to{transform:translateX(-50%) scaleY(.82) scaleX(1.06)}}
+.a-cooking .stamp{position:absolute;z-index:3;right:-10px;top:14px;transform:rotate(9deg);padding:5px 9px;background:var(--acid);color:var(--ink);font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
+.a-cooking strong .dots::after{content:"";animation:dots 1.6s steps(4) infinite}
+@keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
 .a-unreleased{width:clamp(250px,26vw,320px)}.a-unreleased .am{aspect-ratio:4/3;filter:blur(3px) saturate(.6)}
 .a-unreleased .seal{position:absolute;z-index:3;left:50%;top:38%;transform:translate(-50%,-50%) rotate(-8deg);padding:8px 14px;border:3px solid var(--ember);color:var(--ember);font-family:var(--f-display);font-weight:900;font-size:1.6rem;text-transform:uppercase;letter-spacing:.06em;background:rgba(8,6,28,.7)}
 .artefact .tape{top:-12px;width:80px;height:24px}
@@ -1005,7 +1024,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   /* ---------- experiments ---------- */
   const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept", packaging: "Packaging concept", sticker: "Sticker poster" };
   const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3", packaging: "1:1", sticker: "1:1" };
-  let EXP = (U.experiments || []).map((e, i) => ({ ...e, n: i + 1 }));
+  let EXP = (U.experiments || []).filter(e => U.showPlaceholders || e.image || (e.images && e.images.length)).map((e, i) => ({ ...e, n: i + 1 }));
   const seeded = (i, s) => { const x = Math.sin(i * 12.9898 + s * 78.233) * 43758.5453; return x - Math.floor(x); };
   let shuffleSeed = 1;
   function artefactHTML(e, i) {
@@ -1031,9 +1050,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     </figure>`;
   }
   const shelf = $("#shelf");
-  const renderShelf = () => { shelf.innerHTML = EXP.map(artefactHTML).join(""); };
+  const cookingHTML = () => U.cookingNote ? `<figure class="artefact a-cooking" style="--rot:2deg;--dy:-6px">
+      <span class="stamp" aria-hidden="true">On the stove</span>
+      <div class="am" role="img" aria-label="An oven window with something bubbling inside"><div class="oven"><i></i><i></i><i></i><i></i><i></i></div>${motif("flame", "burner")}</div>
+      <figcaption><span class="mono">EXP-${pad(EXP.length + 1)}</span><strong>Cooking<span class="dots" aria-hidden="true"></span></strong><span>${esc(U.cookingNote)}</span></figcaption>
+    </figure>` : "";
+  const renderShelf = () => { shelf.innerHTML = EXP.map(artefactHTML).join("") + cookingHTML(); };
   renderShelf();
-  $("#exp-count").textContent = `${pad(EXP.length)} artefacts`;
+  $("#exp-count").textContent = `${pad(EXP.length)} artefact${EXP.length === 1 ? "" : "s"}${U.cookingNote ? " · more cooking" : ""}`;
   $("#shelf-prev").addEventListener("click", () => shelf.scrollBy({ left: -shelf.clientWidth * .7, behavior: reduced() ? "auto" : "smooth" }));
   $("#shelf-next").addEventListener("click", () => shelf.scrollBy({ left: shelf.clientWidth * .7, behavior: reduced() ? "auto" : "smooth" }));
   $("#shelf-shuffle").addEventListener("click", () => {
