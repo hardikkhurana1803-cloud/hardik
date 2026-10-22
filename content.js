@@ -462,12 +462,28 @@ window.UNIVERSE = {
   showExperiments: true,
 
   /* ---------- Chapter IV: Experiments ----------
-     type  typography | photography | poster | study | motion | unreleased
-     glyph (typography only) the characters shown on the specimen
-     image optional image path
+     type   typography | photography | poster | study | motion | unreleased | packaging
+     glyph  (typography only) the characters shown on the specimen
+     image  optional cover image path
+     images optional list of { src, alt }: clicking the piece opens them full-screen
+     note   optional line shown under the first image, e.g. a "not affiliated" disclaimer
   */
   experiments: [
-    { type: "typography",  title: "Untitled type study",   year: "YYYY", glyph: "Aa", palette: ["#c6ff1a", "#8b3dff", "#0d0b26"], image: "" },
+    {
+      type: "packaging", title: "Coca-Cola × Durex", year: "2026",
+      palette: ["#e61a27", "#ffffff", "#1a0405"],
+      image: "img/experiments/cola-durex-01.jpg",
+      note: "Self-initiated concept collaboration. Not commissioned by or affiliated with Coca-Cola or Durex.",
+      images: [
+        { src: "img/experiments/cola-durex-01.jpg", alt: "The Cola Flavour pack beside an iced Coca-Cola bottle, with open foil sachets on a wet red surface" },
+        { src: "img/experiments/cola-durex-02.jpg", alt: "Pack shot of the Coca-Cola Cola Flavour Extra Thin box on a pale backdrop" },
+        { src: "img/experiments/cola-durex-03.jpg", alt: "The box from a lower three-quarter angle, showing the fizz trail and pack icons" },
+        { src: "img/experiments/cola-durex-04.jpg", alt: "Four views of the box: front, back, and both sides" },
+        { src: "img/experiments/cola-durex-05.jpg", alt: "Flat artwork for the front panel: Coca-Cola script, Cola Flavour Extra Thin and a trail of bubbles" },
+        { src: "img/experiments/cola-durex-06.jpg", alt: "Flat artwork for the back panel with product details and barcode" },
+        { src: "img/experiments/cola-durex-07.jpg", alt: "Side panel with four seals: responsible sourcing, electronically tested, quality assured, world's no. 1" }
+      ]
+    },
     { type: "poster",      title: "Untitled poster",       year: "YYYY", palette: ["#ff2d9b", "#ff5a1f", "#1b0716"], motif: "flame", image: "" },
     { type: "photography", title: "Untitled frame",        year: "YYYY", palette: ["#d9dbe8", "#4b33ff", "#0a0a14"], motif: "moon", image: "" },
     { type: "motion",      title: "Untitled loop",         year: "YYYY", palette: ["#8b3dff", "#c6ff1a", "#0b0820"], motif: "eye", image: "" },

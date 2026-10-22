@@ -462,6 +462,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .a-motion .play{position:absolute;z-index:3;right:12px;top:12px;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;background:var(--magenta);color:var(--ink);padding:4px 8px}
 @keyframes scan{from{background-position:0 100%}to{background-position:0 -100%}}
 .a-study{width:clamp(200px,20vw,260px)}.a-study .am{aspect-ratio:1;border-radius:50%;box-shadow:0 0 0 2px var(--c1),10px 12px 0 rgba(0,0,0,.4)}
+.a-packaging{width:clamp(240px,25vw,310px)}.a-packaging .am{aspect-ratio:1}
+.artefact.has-set{cursor:zoom-in}
+.artefact.has-set:focus-visible{outline:3px solid var(--acid);outline-offset:6px}
+.artefact .set-count{position:absolute;z-index:3;left:10px;bottom:10px;padding:4px 8px;background:rgba(8,6,28,.82);color:var(--bone);font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}
+.lb-note{display:block;margin-top:6px;color:var(--dim);font-size:.8rem}
 .a-unreleased{width:clamp(250px,26vw,320px)}.a-unreleased .am{aspect-ratio:4/3;filter:blur(3px) saturate(.6)}
 .a-unreleased .seal{position:absolute;z-index:3;left:50%;top:38%;transform:translate(-50%,-50%) rotate(-8deg);padding:8px 14px;border:3px solid var(--ember);color:var(--ember);font-family:var(--f-display);font-weight:900;font-size:1.6rem;text-transform:uppercase;letter-spacing:.06em;background:rgba(8,6,28,.7)}
 .artefact .tape{top:-12px;width:80px;height:24px}
@@ -997,8 +1002,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   $("#approach").innerHTML = (L.approach || []).map((s, i) => `<li><span class="rn" aria-hidden="true">${ROMAN[i] || i + 1}.</span><b>${esc(s.name)}</b><p>${esc(s.text)}</p></li>`).join("");
 
   /* ---------- experiments ---------- */
-  const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept" };
-  const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3" };
+  const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept", packaging: "Packaging concept" };
+  const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3", packaging: "1:1" };
   let EXP = (U.experiments || []).map((e, i) => ({ ...e, n: i + 1 }));
   const seeded = (i, s) => { const x = Math.sin(i * 12.9898 + s * 78.233) * 43758.5453; return x - Math.floor(x); };
   let shuffleSeed = 1;
@@ -1016,8 +1021,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
       : e.type === "unreleased" ? `` : "";
     const seal = e.type === "unreleased" ? `<span class="seal" aria-hidden="true">Sealed</span>` : "";
     const tape = (e.type === "poster" || e.type === "typography") ? `<span class="tape" aria-hidden="true"></span>` : "";
-    return `<figure class="artefact a-${esc(e.type)}" style="${vars(e.palette)};--rot:${rot}deg;--dy:${dy}px">
-      ${tape}<div class="am">${inner}${extra}</div>${seal}
+    const set = Array.isArray(e.images) && e.images.length ? e.images : null;
+    const open = set ? ` has-set" tabindex="0" role="button" data-exp="${i}" aria-label="${esc(e.title)}: open ${set.length} image${set.length > 1 ? "s" : ""}` : "";
+    const count = set && set.length > 1 ? `<span class="set-count" aria-hidden="true">${pad(set.length)} images</span>` : "";
+    return `<figure class="artefact a-${esc(e.type)}${open}" style="${vars(e.palette)};--rot:${rot}deg;--dy:${dy}px">
+      ${tape}<div class="am">${inner}${extra}${count}</div>${seal}
       <figcaption><span class="mono">EXP-${pad(e.n)}</span><strong>${esc(e.title)}</strong><span>${esc(label)} · ${esc(e.year)}</span></figcaption>
     </figure>`;
   }
@@ -1040,11 +1048,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     window.addEventListener("pointermove", e => {
       if (!down) return;
       const dx = e.clientX - sx;
-      if (!moved && Math.abs(dx) > 5) { moved = true; shelf.classList.add("dragging"); }
+      if (!moved && Math.abs(dx) > 5) { moved = true; shelf.dataset.dragged = "1"; shelf.classList.add("dragging"); }
       if (moved) shelf.scrollLeft = sl - dx;
     });
-    window.addEventListener("pointerup", () => { down = false; shelf.classList.remove("dragging"); });
+    window.addEventListener("pointerup", () => { down = false; shelf.classList.remove("dragging"); setTimeout(() => { delete shelf.dataset.dragged; }, 0); });
   })();
+  // Open an experiment's images in the viewer
+  const openExp = fig => {
+    const e = EXP[+fig.dataset.exp];
+    if (!e || !e.images) return;
+    const list = e.images.map((im, k) => {
+      const o = typeof im === "string" ? { src: im, alt: e.title } : { src: im.src, alt: im.alt || e.title };
+      if (k === 0 && e.note) o.note = e.note;
+      return o;
+    });
+    lbOpen(fig, list);
+  };
+  shelf.addEventListener("click", ev => {
+    const fig = ev.target.closest(".artefact.has-set");
+    if (fig && !shelf.dataset.dragged) openExp(fig);
+  });
+  shelf.addEventListener("keydown", ev => {
+    const fig = ev.target.closest && ev.target.closest(".artefact.has-set");
+    if (fig && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); openExp(fig); }
+  });
 
   /* ---------- contact ---------- */
   const C = U.contact || {};
@@ -1441,27 +1468,31 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     const src = lbList[lbIndex];
     lbImg.src = src.currentSrc || src.src;
     lbImg.alt = src.alt;
-    $("#lb-cap").textContent = src.alt;
+    const cap = $("#lb-cap");
+    cap.textContent = src.alt;
+    if (src.note) { const n = document.createElement("span"); n.className = "lb-note"; n.textContent = src.note; cap.append(n); }
     $("#lb-count").textContent = `${pad(lbIndex + 1)} / ${pad(lbList.length)}`;
     const multi = lbList.length > 1;
     $("#lb-prev").hidden = $("#lb-next").hidden = !multi;
   }
-  function lbOpen(slot) {
-    lbList = $$("#case-content .img-slot img");
-    const k = lbList.indexOf($("img", slot));
+  let lbInert = null;
+  function lbOpen(slot, list) {
+    lbList = list || $$("#case-content .img-slot img");
+    const k = list ? 0 : lbList.indexOf($("img", slot));
     if (k < 0) return;
     clearTimeout(lbTimer);
     lbReturn = slot;
     lbShow(k);
     lb.hidden = false; void lb.offsetWidth; lb.classList.add("is-open");
-    caseEl.inert = true;
+    lbInert = list ? $("main") || document.body.firstElementChild : caseEl;
+    if (lbInert && lbInert !== lb) lbInert.inert = true;
     $("#lb-close").focus({ preventScroll: true });
   }
   function lbClose() {
     if (lbIndex < 0) return;
     lbIndex = -1;
     lb.classList.remove("is-open");
-    caseEl.inert = false;
+    if (lbInert) lbInert.inert = false;
     lbTimer = setTimeout(() => { lb.hidden = true; lbImg.removeAttribute("src"); }, reduced() ? 0 : 350);
     if (lbReturn) lbReturn.focus({ preventScroll: true });
   }
