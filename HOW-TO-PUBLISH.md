@@ -36,6 +36,12 @@ powershell -ExecutionPolicy Bypass -File build.ps1 -Domain https://yourdomain.co
 
 Edit → run `build.ps1` → Netlify **Deploys** → drag the `site` folder. The address stays the same.
 
+## Images not showing online?
+
+- The `img` folder must be uploaded too, next to `index.html`, with the same subfolders (`img/netflix/`, `img/airindia/`, …).
+- Capitals must match exactly. Windows ignores them, web hosts don't: `NF-27.JPG` ≠ `nf-27.jpg`. `build.ps1` now warns about any image that's missing or named differently.
+- A missing image shows the project's colours instead of a broken icon; press F12 → Console on the live site to see which file it couldn't find.
+
 ## 5. After launch
 
 - Check the link preview at **linkedin.com/post-inspector**.
