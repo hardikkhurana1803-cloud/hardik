@@ -459,7 +459,7 @@ window.UNIVERSE = {
   nextWorldNote: "A new world is forming. Check back soon.",
 
   // Set to true to show the Experiments chapter (and its stop on the map) again
-  showExperiments: false,
+  showExperiments: true,
 
   /* ---------- Chapter IV: Experiments ----------
      type  typography | photography | poster | study | motion | unreleased
