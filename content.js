@@ -496,7 +496,17 @@ window.UNIVERSE = {
         { src: "img/experiments/sticker-04.jpg", alt: "Death Awaits: a skull on a sword over a black distressed panel, the words running up and down the sides" }
       ]
     },
-    { type: "photography", title: "Untitled frame",        year: "YYYY", palette: ["#d9dbe8", "#4b33ff", "#0a0a14"], motif: "moon", image: "" },
+    {
+      type: "packaging", title: "Coca-Cola India Can", year: "2026",
+      palette: ["#e8141c", "#f6d9d6", "#1a0405"],
+      image: "img/experiments/coke-india-01.jpg",
+      note: "Self-initiated concept. Not commissioned by or affiliated with The Coca-Cola Company.",
+      images: [
+        { src: "img/experiments/coke-india-01.jpg", alt: "A chilled Coca-Cola can with an Indian skyline of palaces, temples and the Taj Mahal printed in white around its base" },
+        { src: "img/experiments/coke-india-02.jpg", alt: "The can from four sides: the logo, Recycle Me, an elephant above the palaces, and the nutrition panel" },
+        { src: "img/experiments/coke-india-03.jpg", alt: "Flat wrap artwork: the Coca-Cola script, a camel, an elephant and Indian landmarks in white on red" }
+      ]
+    },
     { type: "motion",      title: "Untitled loop",         year: "YYYY", palette: ["#8b3dff", "#c6ff1a", "#0b0820"], motif: "eye", image: "" },
     { type: "study",       title: "Untitled colour study", year: "YYYY", palette: ["#ff5a1f", "#ff2d9b", "#200a05"], motif: "planet", image: "" },
     { type: "unreleased",  title: "Unreleased concept",    year: "YYYY", palette: ["#c9a85a", "#d9dbe8", "#15120a"], motif: "crown", image: "" },
