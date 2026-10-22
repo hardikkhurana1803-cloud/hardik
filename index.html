@@ -463,6 +463,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 @keyframes scan{from{background-position:0 100%}to{background-position:0 -100%}}
 .a-study{width:clamp(200px,20vw,260px)}.a-study .am{aspect-ratio:1;border-radius:50%;box-shadow:0 0 0 2px var(--c1),10px 12px 0 rgba(0,0,0,.4)}
 .a-packaging{width:clamp(240px,25vw,310px)}.a-packaging .am{aspect-ratio:1}
+.a-sticker{width:clamp(220px,23vw,290px)}.a-sticker .am{aspect-ratio:1;border:6px solid var(--bone);border-radius:14px;box-shadow:6px 8px 0 rgba(0,0,0,.45)}
 .artefact.has-set{cursor:zoom-in}
 .artefact.has-set:focus-visible{outline:3px solid var(--acid);outline-offset:6px}
 .artefact .set-count{position:absolute;z-index:3;left:10px;bottom:10px;padding:4px 8px;background:rgba(8,6,28,.82);color:var(--bone);font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase}
@@ -1002,8 +1003,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   $("#approach").innerHTML = (L.approach || []).map((s, i) => `<li><span class="rn" aria-hidden="true">${ROMAN[i] || i + 1}.</span><b>${esc(s.name)}</b><p>${esc(s.text)}</p></li>`).join("");
 
   /* ---------- experiments ---------- */
-  const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept", packaging: "Packaging concept" };
-  const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3", packaging: "1:1" };
+  const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept", packaging: "Packaging concept", sticker: "Sticker poster" };
+  const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3", packaging: "1:1", sticker: "1:1" };
   let EXP = (U.experiments || []).map((e, i) => ({ ...e, n: i + 1 }));
   const seeded = (i, s) => { const x = Math.sin(i * 12.9898 + s * 78.233) * 43758.5453; return x - Math.floor(x); };
   let shuffleSeed = 1;
@@ -1020,7 +1021,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     const extra = e.type === "motion" ? `<span class="scan" aria-hidden="true"></span><span class="play" aria-hidden="true">▶ Loop</span>`
       : e.type === "unreleased" ? `` : "";
     const seal = e.type === "unreleased" ? `<span class="seal" aria-hidden="true">Sealed</span>` : "";
-    const tape = (e.type === "poster" || e.type === "typography") ? `<span class="tape" aria-hidden="true"></span>` : "";
+    const tape = (e.type === "poster" || e.type === "typography" || e.type === "sticker") ? `<span class="tape" aria-hidden="true"></span>` : "";
     const set = Array.isArray(e.images) && e.images.length ? e.images : null;
     const open = set ? ` has-set" tabindex="0" role="button" data-exp="${i}" aria-label="${esc(e.title)}: open ${set.length} image${set.length > 1 ? "s" : ""}` : "";
     const count = set && set.length > 1 ? `<span class="set-count" aria-hidden="true">${pad(set.length)} images</span>` : "";

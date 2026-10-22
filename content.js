@@ -462,7 +462,7 @@ window.UNIVERSE = {
   showExperiments: true,
 
   /* ---------- Chapter IV: Experiments ----------
-     type   typography | photography | poster | study | motion | unreleased | packaging
+     type   typography | photography | poster | study | motion | unreleased | packaging | sticker
      glyph  (typography only) the characters shown on the specimen
      image  optional cover image path
      images optional list of { src, alt }: clicking the piece opens them full-screen
@@ -484,7 +484,18 @@ window.UNIVERSE = {
         { src: "img/experiments/cola-durex-07.jpg", alt: "Side panel with four seals: responsible sourcing, electronically tested, quality assured, world's no. 1" }
       ]
     },
-    { type: "poster",      title: "Untitled poster",       year: "YYYY", palette: ["#ff2d9b", "#ff5a1f", "#1b0716"], motif: "flame", image: "" },
+    {
+      type: "sticker", title: "Sticker Posters", year: "2026",
+      palette: ["#b8325f", "#f3e6e8", "#140a10"],
+      image: "img/experiments/sticker-01.jpg",
+      note: "Personal fan explorations. Not affiliated with or endorsed by Sony, Santa Monica Studio or Porsche.",
+      images: [
+        { src: "img/experiments/sticker-01.jpg", alt: "Ghost of Sparta: a bearded Spartan warrior in grainy magenta halftone, the title set vertically down the left edge" },
+        { src: "img/experiments/sticker-02.jpg", alt: "Live for Speed: a sticker sheet with a race-numbered 911, a checkered flag, a rear wing close-up and two track maps" },
+        { src: "img/experiments/sticker-03.jpg", alt: "911: a front-on Porsche in deep red, with a giant checkered 911 behind it" },
+        { src: "img/experiments/sticker-04.jpg", alt: "Death Awaits: a skull on a sword over a black distressed panel, the words running up and down the sides" }
+      ]
+    },
     { type: "photography", title: "Untitled frame",        year: "YYYY", palette: ["#d9dbe8", "#4b33ff", "#0a0a14"], motif: "moon", image: "" },
     { type: "motion",      title: "Untitled loop",         year: "YYYY", palette: ["#8b3dff", "#c6ff1a", "#0b0820"], motif: "eye", image: "" },
     { type: "study",       title: "Untitled colour study", year: "YYYY", palette: ["#ff5a1f", "#ff2d9b", "#200a05"], motif: "planet", image: "" },
