@@ -88,19 +88,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .topbar{position:fixed;inset:0 0 auto;z-index:60;display:flex;align-items:center;gap:16px;justify-content:space-between;
   padding:calc(12px + env(safe-area-inset-top,0px)) var(--gr) 12px var(--gl);
   background:linear-gradient(var(--void),rgba(8,6,28,.7) 55%,transparent)}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
+.brand{position:relative;display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
 .brand svg{width:26px;height:26px;fill:var(--acid);transition:transform .8s var(--ease-out)}
 .brand:hover svg,.brand:focus-visible svg{transform:rotate(180deg)}
 .brand span{transition:color .3s}
 .brand:hover span,.brand:focus-visible span{color:var(--acid)}
-.brand-tip{font-family:var(--f-hand);font-weight:400;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--acid);white-space:nowrap;
+.brand-tip{position:absolute;left:2px;top:calc(100% + 6px);font-family:var(--f-hand);font-weight:400;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--acid);white-space:nowrap;
   opacity:0;transform:translateX(-8px) rotate(-4deg);transition:opacity .35s,transform .45s var(--ease-out);pointer-events:none}
 .brand:hover .brand-tip,.brand:focus-visible .brand-tip{opacity:1;transform:translateX(0) rotate(-4deg)}
 @media (hover:none),(max-width:640px){.brand-tip{display:none}}
-.now{display:flex;align-items:baseline;gap:10px;margin:0 auto 0 12px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.now{display:flex;align-items:baseline;gap:10px;margin:0 auto 0 12px;white-space:nowrap;min-width:0;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .now b{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.25rem;letter-spacing:0;color:var(--magenta);text-transform:none}
 .tb-actions{display:flex;gap:10px;align-items:center}
-.sound,.map-btn{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;border:1px solid var(--line);background:rgba(8,6,28,.55)}
+.sound,.map-btn{display:flex;align-items:center;gap:8px;white-space:nowrap;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:9px 12px;border:1px solid var(--line);background:rgba(8,6,28,.55)}
 .sound:hover{border-color:var(--bone)}
 .eq{display:flex;align-items:flex-end;gap:2px;height:12px}
 .eq i{width:2px;height:3px;background:currentColor;transition:height .3s}
@@ -649,7 +649,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 
 
 /* ---------- Minimal Mode toggle ---------- */
-.mode-toggle{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid var(--line);background:rgba(8,6,28,.55);
+.mode-toggle{display:flex;align-items:center;gap:9px;white-space:nowrap;padding:9px 12px;border:1px solid var(--line);background:rgba(8,6,28,.55);
   font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--bone);transition:border-color .3s,color .3s,background-color .6s}
 .mode-toggle:hover{border-color:var(--bone)}
 .mt-track{position:relative;flex:none;width:30px;height:16px;border-radius:999px;border:1px solid currentColor;transition:background-color .45s var(--ease-out),border-color .45s}
