@@ -461,6 +461,10 @@ window.UNIVERSE = {
   // Set to true to show the Experiments chapter (and its stop on the map) again
   showExperiments: true,
 
+  // Music that starts on a visitor's first click. Browsers don't allow sound before that.
+  // boombap | nightdrive | dusk | lofi | cosmic, or "off" to start silent.
+  defaultSound: "lofi",
+
   // The last card on the Experiments shelf: something still in the oven. Set to "" to hide it.
   cookingNote: "New experiments are cooking. Check back soon.",
 
