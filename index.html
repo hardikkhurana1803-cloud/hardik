@@ -188,6 +188,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   background:radial-gradient(circle at 32% 28%,#fff 0 6%,#d9dbe8 14%,#6b6c92 42%,#1b1840 70%,#d9dbe8 96%);box-shadow:0 30px 60px rgba(0,0,0,.5)}
 .sticker-round{display:grid;place-items:center;width:clamp(84px,10vw,124px);aspect-ratio:1;border-radius:50%;background:var(--magenta);color:var(--ink);
   font-family:var(--f-display);font-weight:900;font-size:clamp(.9rem,1.4vw,1.15rem);line-height:.95;text-align:center;text-transform:uppercase;border:3px dashed rgba(10,8,20,.45);box-shadow:4px 6px 0 rgba(0,0,0,.35)}
+/* Vol. 01 / Side A sticker doubles as the gate's music button */
+button.sticker-round{pointer-events:auto;cursor:pointer;z-index:4;border:0;position:absolute;padding:0;transition:filter .3s}
+button.sticker-round::before{content:"";position:absolute;inset:5px;border-radius:50%;border:3px dashed rgba(10,8,20,.5)}
+button.sticker-round.is-playing::before{animation:spin 6s linear infinite}
+button.sticker-round:hover{filter:brightness(1.12);animation-play-state:paused}
+button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:4px}
+.vinyl-txt{display:grid;gap:5px;justify-items:center}
+.vinyl-state{font-family:var(--f-mono);font-weight:500;font-size:.58rem;letter-spacing:.12em;background:var(--ink);color:var(--magenta);padding:3px 6px;border-radius:999px}
 .star-st{width:clamp(60px,8vw,110px);fill:var(--acid);filter:drop-shadow(4px 6px 0 rgba(0,0,0,.4))}
 .moon-st{width:clamp(50px,6vw,84px);fill:var(--gold)}
 .hand{font-family:var(--f-hand);color:var(--acid);font-size:clamp(1rem,1.6vw,1.3rem);transform:rotate(-6deg)}
@@ -635,6 +643,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   .wt-2{padding-left:.3em}.wt-4{padding-left:0}
   .gate-name .ln:nth-child(2){padding-left:.2em}
   .float.hide-sm{display:none}
+  .vinyl{right:16px!important;bottom:calc(64px + env(safe-area-inset-bottom,0px))!important;width:84px}
 }
 
 /* ---------- reduced motion ---------- */
@@ -661,7 +670,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   <div class="gate-arch" aria-hidden="true"></div>
   <div class="float orb" data-depth="-0.04" style="left:7%;top:14%;--d:14s;--fx:16px;--fy:-24px" aria-hidden="true"></div>
   <svg class="float star-st" viewBox="0 0 100 100" style="right:9%;top:12%;--d:11s;--fr:-14deg" aria-hidden="true"><polygon points="50,2 58,38 96,24 66,50 96,76 58,62 50,98 42,62 4,76 34,50 4,24 42,38"/></svg>
-  <div class="float sticker-round hide-sm" style="right:7%;bottom:14%;--d:13s;--fr:12deg" aria-hidden="true">Vol. 01<br>Side A</div>
+  <button class="float sticker-round vinyl" id="vinyl" style="right:7%;bottom:14%;--d:13s;--fr:12deg" aria-pressed="false" aria-label="Play music">
+    <span class="vinyl-txt"><span>Vol. 01<br>Side A</span><span class="vinyl-state" id="vinyl-state">▶ Play</span></span>
+  </button>
   <svg class="float moon-st hide-sm" viewBox="0 0 100 100" style="left:12%;bottom:12%;--d:16s;--fx:-10px" aria-hidden="true"><path d="M64 8A44 44 0 1 0 92 70 36 36 0 1 1 64 8Z"/></svg>
   <div class="gate-inner">
     <p class="gate-name" id="gate-name"></p>
@@ -1858,25 +1869,43 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     $$(".sp-opt", soundPanel).forEach(o => o.setAttribute("aria-pressed", String(o.dataset.track === id)));
     soundBtn.classList.toggle("is-playing", id !== "off");
     $(".sound-label", soundBtn).textContent = id === "off" ? "Sound off" : Sound.tracks[id].name;
+    if (id !== "off") lastTrack = id;
+    syncVinyl();
+  }
+  let lastTrack = U.defaultSound && Sound.tracks[U.defaultSound] ? U.defaultSound : "lofi";
+  const vinyl = $("#vinyl");
+  function syncVinyl() {
+    const on = soundNow !== "off" && !pendingStart;
+    vinyl.classList.toggle("is-playing", on);
+    vinyl.setAttribute("aria-pressed", String(on));
+    vinyl.setAttribute("aria-label", on ? `Pause music (${Sound.tracks[soundNow].name})` : "Play music");
+    $("#vinyl-state").textContent = on ? "❚❚ Pause" : "▶ Play";
   }
   // Music is on by default. Browsers only allow sound after the visitor clicks, taps or
   // presses a key, so the default track starts on that first interaction.
   // A visitor who picks Off stays silent for the rest of their visit, refreshes included.
-  let pendingStart = false;
+  var pendingStart = false;
   const chosen = store.get("sound");
   const startWith = chosen && (chosen === "off" || Sound.tracks[chosen]) ? chosen
     : (U.defaultSound && Sound.tracks[U.defaultSound] ? U.defaultSound : "off");
   if (startWith !== "off") {
-    showTrack(startWith);
     pendingStart = true;
-    const kick = () => {
-      if (!pendingStart) return;
+    showTrack(startWith);
+    const kick = e => {
+      if (!pendingStart || (e && e.target.closest && e.target.closest("#vinyl"))) return;
       pendingStart = false;
       ["click", "keydown", "touchend"].forEach(t => removeEventListener(t, kick, true));
       if (soundNow !== "off" && !Sound.play(soundNow)) showTrack("off");
+      syncVinyl();
     };
     ["click", "keydown", "touchend"].forEach(t => addEventListener(t, kick, true));
   }
+  vinyl.addEventListener("click", () => {
+    const on = soundNow !== "off" && !pendingStart;
+    pendingStart = false;
+    if (on) { Sound.stop(); store.set("sound", "off"); showTrack("off"); }
+    else if (Sound.play(lastTrack)) { store.set("sound", lastTrack); showTrack(lastTrack); }
+  });
   $("#sp-list").addEventListener("click", e => {
     const b = e.target.closest(".sp-opt"); if (!b) return;
     const id = b.dataset.track;
