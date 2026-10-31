@@ -643,7 +643,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   <div class="float sticker-round hide-sm" style="right:7%;bottom:14%;--d:13s;--fr:12deg" aria-hidden="true">Vol. 01<br>Side A</div>
   <svg class="float moon-st hide-sm" viewBox="0 0 100 100" style="left:12%;bottom:12%;--d:16s;--fx:-10px" aria-hidden="true"><path d="M64 8A44 44 0 1 0 92 70 36 36 0 1 1 64 8Z"/></svg>
   <div class="gate-inner">
-    <p class="gate-kicker mono"><span class="dot" aria-hidden="true"></span><span id="gate-count">A portfolio in five chapters</span><span data-bind="role"></span></p>
     <p class="gate-name" id="gate-name"></p>
     <p class="gate-statement" data-bind="statement"></p>
     <div class="gate-row">
@@ -926,7 +925,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     const n = $(".ch-tag .num", s);
     if (n) n.textContent = "Chapter " + ROMAN[i];
   });
-  $("#gate-count").textContent = `A portfolio in ${["one", "two", "three", "four", "five", "six", "seven"][shown.length - 1] || shown.length} chapters`;
 
   // Gate name: one line per word, each letter rises in
   const nameEl = $("#gate-name");
