@@ -125,8 +125,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 @media (max-width:640px){.now{display:none}.sound,.map-btn{padding:9px 10px}}
 
 /* ---------- gate (opening) ---------- */
-.gate{position:fixed;inset:0;z-index:120;display:grid;place-items:center;overflow:hidden;background:var(--void);
-  padding:calc(24px + env(safe-area-inset-top,0px)) var(--gr) calc(24px + env(safe-area-inset-bottom,0px)) var(--gl)}
+.gate{position:fixed;inset:0;z-index:120;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;background:var(--void);scroll-behavior:smooth}
+.gate-hero{position:relative;min-height:100vh;min-height:100dvh;display:grid;place-items:center;overflow:hidden;
+  padding:calc(24px + env(safe-area-inset-top,0px)) var(--gr) calc(64px + env(safe-area-inset-bottom,0px)) var(--gl)}
+.gate-down{position:fixed;z-index:3;transition:opacity .4s,visibility .4s;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:grid;justify-items:center;gap:4px;
+  font-family:var(--f-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-decoration:none}
+.gate-down:hover{color:var(--acid)}
+.gate.scrolled .gate-down{opacity:0;visibility:hidden}
+.gate-down i{font-style:normal;font-size:1.1rem;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(6px)}}
+.gate-map{position:relative;padding:clamp(48px,7vw,90px) var(--gr) calc(40px + env(safe-area-inset-bottom,0px)) var(--gl);border-top:1px solid var(--line);
+  background:radial-gradient(60% 50% at 50% 0%,rgba(139,61,255,.18),transparent 70%),var(--void)}
+.gate-map-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 24px;max-width:1440px;margin-inline:auto}
+.gate-map-head h2{margin:0;font-family:var(--f-spray);font-weight:400;font-size:clamp(2rem,5vw,3.6rem);line-height:1;color:var(--acid);transform:rotate(-2deg)}
+.gate-map-head p{margin:0;max-width:40ch;color:var(--dim)}
+.gate-map .map-terrain{max-width:1440px;margin:10px auto 0;height:clamp(460px,62vh,640px);flex:none}
+@media (max-width:760px){.gate-map .map-terrain{height:auto;margin-top:24px}}
 .gate-sky{position:absolute;inset:-20%;
   background:radial-gradient(38% 34% at 28% 30%,rgba(139,61,255,.6),transparent 70%),
    radial-gradient(32% 30% at 76% 62%,rgba(255,45,155,.38),transparent 70%),
@@ -636,6 +650,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 
 <!-- ============ GATE: Enter the universe ============ -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-name" hidden>
+ <div class="gate-hero">
   <div class="gate-sky" aria-hidden="true"></div>
   <div class="gate-arch" aria-hidden="true"></div>
   <div class="float orb" data-depth="-0.04" style="left:7%;top:14%;--d:14s;--fx:16px;--fy:-24px" aria-hidden="true"></div>
@@ -654,6 +669,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
       <span class="hand" aria-hidden="true">sound stays off unless you ask</span>
     </div>
   </div>
+  <a class="gate-down" href="#gate-map" id="gate-down">Scroll for the map<i aria-hidden="true">↓</i></a>
+ </div>
+ <section class="gate-map" id="gate-map" aria-labelledby="gate-map-title">
+  <div class="gate-map-head">
+    <h2 id="gate-map-title">Map of the universe</h2>
+    <p>Know where you're headed? Pick a stop and land straight in that chapter.</p>
+  </div>
+  <div class="map-terrain">
+    <svg class="map-svg" id="gate-map-svg" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <ol class="map-nodes" id="gate-map-nodes"></ol>
+  </div>
+ </section>
 </div>
 <div class="portal-flash" id="portal-flash" hidden></div>
 
@@ -1227,7 +1254,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   function showGate() {
     gateOpen = true;
     gate.hidden = false;
-    gate.classList.remove("is-in");
+    gate.scrollTop = 0;
+    gate.classList.remove("is-in", "scrolled");
     void gate.offsetWidth;
     gate.classList.add("is-in");
     setInert(true); lock(true);
@@ -1275,7 +1303,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   ].filter(n => { const s = document.getElementById(n.id); return s && !s.hidden; })
    // space the stops evenly across the map, zig-zagging up and down
    .map((n, i, a) => ({ ...n, x: Math.round(12 + i * 76 / Math.max(a.length - 1, 1)), y: i % 2 ? 30 : 66 }));
-  $("#map-nodes").innerHTML = NODES.map((n, i) => {
+  $("#map-nodes").innerHTML = $("#gate-map-nodes").innerHTML = NODES.map((n, i) => {
     const sec = document.getElementById(n.id);
     return `<li data-go="${n.id}" style="--x:${n.x}%;--y:${n.y}%;--nc:${n.c}">
       <a class="node" href="#${n.id}">
@@ -1308,7 +1336,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
     }
     s += `<path class="route" d="${route}"/>`;
     s += `<g class="stars">${Array.from({ length: 70 }, (_, i) => `<circle cx="${(seeded(i, 3) * 1000).toFixed(0)}" cy="${(seeded(i, 9) * 600).toFixed(0)}" r="${(seeded(i, 5) * 1.6 + .3).toFixed(1)}" opacity="${(seeded(i, 2) * .6 + .2).toFixed(2)}"/>`).join("")}</g>`;
-    $("#map-svg").innerHTML = s;
+    $("#map-svg").innerHTML = $("#gate-map-svg").innerHTML = s;
   })();
   let mapOpen = false, mapReturn = null;
   function openMap() {
@@ -1338,6 +1366,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
       target.scrollIntoView({ behavior: reduced() ? "auto" : "smooth" });
       const h = $("h1,h2", target); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
     });
+  });
+
+  $("#gate-map-nodes").addEventListener("click", e => {
+    const a = e.target.closest("a"); if (!a) return;
+    e.preventDefault();
+    const target = document.getElementById(a.getAttribute("href").slice(1));
+    leaveGate(false);
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "auto" });
+      const h = $("h1,h2", target); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    });
+  });
+  gate.addEventListener("scroll", () => gate.classList.toggle("scrolled", gate.scrollTop > 40), { passive: true });
+  $("#gate-down").addEventListener("click", e => {
+    e.preventDefault();
+    $("#gate-map").scrollIntoView({ behavior: reduced() ? "auto" : "smooth" });
   });
 
   /* ---------- case study ---------- */
