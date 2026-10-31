@@ -89,7 +89,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   background:linear-gradient(var(--void),rgba(8,6,28,.7) 55%,transparent)}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
 .brand svg{width:26px;height:26px;fill:var(--acid);transition:transform .8s var(--ease-out)}
-.brand:hover svg{transform:rotate(180deg)}
+.brand:hover svg,.brand:focus-visible svg{transform:rotate(180deg)}
+.brand span{transition:color .3s}
+.brand:hover span,.brand:focus-visible span{color:var(--acid)}
+.brand-tip{font-family:var(--f-hand);font-weight:400;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--acid);white-space:nowrap;
+  opacity:0;transform:translateX(-8px) rotate(-4deg);transition:opacity .35s,transform .45s var(--ease-out);pointer-events:none}
+.brand:hover .brand-tip,.brand:focus-visible .brand-tip{opacity:1;transform:translateX(0) rotate(-4deg)}
+@media (hover:none){.brand-tip{display:none}}
 .now{display:flex;align-items:baseline;gap:10px;margin:0 auto 0 12px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .now b{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.25rem;letter-spacing:0;color:var(--magenta);text-transform:none}
 .tb-actions{display:flex;gap:10px;align-items:center}
@@ -686,9 +692,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 
 <!-- ============ TOP BAR ============ -->
 <header class="topbar" id="topbar">
-  <a class="brand" href="#world" aria-label="Back to the start">
+  <a class="brand" href="#world" id="brand" aria-label="HK: back to the gate" title="Back to the gate">
     <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 58,38 96,24 66,50 96,76 58,62 50,98 42,62 4,76 34,50 4,24 42,38"/></svg>
     <span data-bind="alias"></span>
+    <i class="brand-tip" aria-hidden="true">← back to the gate</i>
   </a>
   <p class="now" id="now"><span id="now-num">Ch. I</span><b id="now-name">The World</b></p>
   <div class="tb-actions">
@@ -1283,6 +1290,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   $("#gate-enter").addEventListener("click", () => leaveGate(true));
   $("#gate-skip").addEventListener("click", () => leaveGate(false));
   $("#replay").addEventListener("click", showGate);
+  // HK in the top bar takes you back to the gate
+  $("#brand").addEventListener("click", e => {
+    e.preventDefault();
+    if (typeof closeMap === "function") closeMap(false);
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    scrollTo(0, 0);
+    showGate();
+  });
   // Gate parallax on pointer
   if (fine && !reduced()) {
     gate.addEventListener("pointermove", e => {
