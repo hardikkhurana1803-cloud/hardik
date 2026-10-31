@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>try{if(localStorage.getItem("hk-mode")==="minimal")document.documentElement.dataset.mode="minimal"}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308061c'/%3E%3Cpolygon fill='%23c6ff1a' points='50,10 56,40 88,30 64,50 88,70 56,60 50,90 44,60 12,70 36,50 12,30 44,40'/%3E%3C/svg%3E">
@@ -95,7 +96,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .brand-tip{font-family:var(--f-hand);font-weight:400;font-size:.95rem;letter-spacing:0;text-transform:none;color:var(--acid);white-space:nowrap;
   opacity:0;transform:translateX(-8px) rotate(-4deg);transition:opacity .35s,transform .45s var(--ease-out);pointer-events:none}
 .brand:hover .brand-tip,.brand:focus-visible .brand-tip{opacity:1;transform:translateX(0) rotate(-4deg)}
-@media (hover:none){.brand-tip{display:none}}
+@media (hover:none),(max-width:640px){.brand-tip{display:none}}
 .now{display:flex;align-items:baseline;gap:10px;margin:0 auto 0 12px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .now b{font-family:var(--f-serif);font-style:italic;font-weight:400;font-size:1.25rem;letter-spacing:0;color:var(--magenta);text-transform:none}
 .tb-actions{display:flex;gap:10px;align-items:center}
@@ -646,6 +647,146 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
   .vinyl{right:16px!important;bottom:calc(64px + env(safe-area-inset-bottom,0px))!important;width:84px}
 }
 
+
+/* ---------- Minimal Mode toggle ---------- */
+.mode-toggle{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid var(--line);background:rgba(8,6,28,.55);
+  font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--bone);transition:border-color .3s,color .3s,background-color .6s}
+.mode-toggle:hover{border-color:var(--bone)}
+.mt-track{position:relative;flex:none;width:30px;height:16px;border-radius:999px;border:1px solid currentColor;transition:background-color .45s var(--ease-out),border-color .45s}
+.mt-thumb{position:absolute;left:2px;top:2px;width:10px;height:10px;border-radius:50%;background:currentColor;transition:transform .45s var(--ease-out),background-color .45s}
+.mode-toggle[aria-checked="true"] .mt-track{background:var(--bone)}
+.mode-toggle[aria-checked="true"] .mt-thumb{transform:translateX(14px);background:var(--void)}
+.gate-mode{position:absolute;z-index:5;top:calc(16px + env(safe-area-inset-top,0px));right:var(--gr)}
+@media (max-width:520px){.mode-toggle .mt-label{display:none}.mode-toggle{padding:9px 10px}}
+@media (max-width:380px){.sound .sound-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.topbar{gap:8px}.tb-actions{gap:6px}}
+
+/* ---------- smooth switch between modes ---------- */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.8s;animation-timing-function:cubic-bezier(.4,0,.2,1)}
+html.mode-fade,html.mode-fade *{transition:background-color .7s ease,color .7s ease,border-color .7s ease,fill .7s ease,stroke .7s ease!important}
+
+/* =====================================================================
+   MINIMAL MODE · beige × black
+   One theme layer over the same page: the colour system is re-mapped,
+   decoration is quietened, structure comes from hairlines and type.
+   ===================================================================== */
+html[data-mode="minimal"]{
+  --void:#ece5d8; --midnight:#e3dbcc; --indigo:#d6cdbb; --paper:#f4efe6;
+  --bone:#141210; --ink:#ece5d8; --dim:#6b655b; --line:rgba(20,18,16,.16);
+  --violet:#6b655b; --acid:#141210; --magenta:#141210; --ember:#141210; --gold:#6b655b; --chrome:#141210;
+  --f-spray:"Instrument Serif","Times New Roman",Georgia,serif;
+  --f-hand:"Instrument Serif","Times New Roman",Georgia,serif;
+  color-scheme:light}
+html[data-mode="minimal"],html[data-mode="minimal"][data-chapter]{--a1:#ece5d8;--a2:#ece5d8;--a3:#e6dfd1}
+/* every project, sleeve and map stop keeps its structure but speaks in black and grey */
+html[data-mode="minimal"] *{--c1:#141210!important;--c2:#6b655b!important;--c3:#e3dbcc!important;--sc:#e3dbcc!important;--nc:#141210!important;
+  box-shadow:none!important;text-shadow:none!important}
+html[data-mode="minimal"] ::selection{background:#141210;color:#ece5d8}
+html[data-mode="minimal"] body{background:var(--void)}
+html[data-mode="minimal"] .grain,
+html[data-mode="minimal"] .atmo::before,
+html[data-mode="minimal"] .atmo::after,
+html[data-mode="minimal"] .portal-flash{display:none}
+
+/* type: hand-drawn and spray accents become quiet italic serif, set straight */
+html[data-mode="minimal"] .ch-tag .spray,
+html[data-mode="minimal"] .lore-title .graf,
+html[data-mode="minimal"] .map-head h2,
+html[data-mode="minimal"] .gate-map-head h2{font-style:italic;font-weight:400;transform:none}
+html[data-mode="minimal"] .ch-tag{padding-bottom:14px;border-bottom:1px solid var(--line)}
+html[data-mode="minimal"] .hand,
+html[data-mode="minimal"] .proj-title .pt-b,
+html[data-mode="minimal"] .portrait figcaption,
+html[data-mode="minimal"] .annot,
+html[data-mode="minimal"] .node-here{transform:none;font-style:italic}
+
+/* top bar, buttons, panels */
+html[data-mode="minimal"] .topbar{background:rgba(236,229,216,.92);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding-bottom:12px}
+html[data-mode="minimal"] .sound,
+html[data-mode="minimal"] .mode-toggle{background:transparent}
+html[data-mode="minimal"] .map-btn{background:var(--bone);color:var(--void);border-color:var(--bone);clip-path:none}
+html[data-mode="minimal"] .sound-panel{background:var(--paper)}
+html[data-mode="minimal"] .cta{clip-path:none;background:var(--bone);color:var(--void);border:1px solid var(--bone);transition:background-color .3s,color .3s}
+html[data-mode="minimal"] .cta:hover{background:transparent;color:var(--bone)}
+html[data-mode="minimal"] .case-btn:hover{border-color:var(--bone);color:var(--bone)}
+
+/* gate: a quiet title page */
+html[data-mode="minimal"] .gate,
+html[data-mode="minimal"] .gate-map{background:var(--void)}
+html[data-mode="minimal"] .gate-sky{display:none}
+html[data-mode="minimal"] .gate-arch{background:none;border:1px solid var(--line)}
+html[data-mode="minimal"] .gate-arch::after{border-color:var(--line)}
+html[data-mode="minimal"] .float:not(.vinyl){display:none}
+html[data-mode="minimal"] .chrome-text{background:none;color:var(--bone);-webkit-text-fill-color:currentColor}
+html[data-mode="minimal"] .gate.is-in .gate-name .ch.chrome-text{animation:rise 1s var(--ease-out) calc(var(--i)*45ms + 150ms) both}
+html[data-mode="minimal"] button.sticker-round{background:transparent;color:var(--bone);border:1px solid var(--bone)}
+html[data-mode="minimal"] button.sticker-round::before{border:1px dashed var(--line)}
+html[data-mode="minimal"] .vinyl-state{background:var(--bone);color:var(--void)}
+html[data-mode="minimal"] .gate-map{border-top:1px solid var(--line)}
+
+/* Chapter I */
+html[data-mode="minimal"] .portrait{transform:none;background:var(--paper);border:1px solid var(--line)}
+html[data-mode="minimal"] .portrait figcaption{color:var(--bone)}
+html[data-mode="minimal"] .tape{display:none}
+html[data-mode="minimal"] .stk{--r:0deg!important;background:transparent!important;color:var(--bone)!important;border:1px solid var(--bone)!important;outline:0!important;clip-path:none!important;border-radius:999px!important;font-weight:700}
+html[data-mode="minimal"] .stk:hover{transform:none;background:var(--bone)!important;color:var(--void)!important}
+html[data-mode="minimal"] .tapes{height:clamp(110px,12vw,150px);border-block:1px solid var(--line)}
+html[data-mode="minimal"] .tape-a{transform:translateY(-95%)}
+html[data-mode="minimal"] .tape-b{transform:translateY(5%);background:transparent;color:var(--bone);border-block:1px solid var(--line)}
+html[data-mode="minimal"] .socials a{border-color:var(--bone)}
+
+/* Chapter II and the case studies */
+html[data-mode="minimal"] .card-no{transform:none;background:var(--bone);color:var(--void)}
+html[data-mode="minimal"] .card-link:hover .card-no{transform:none}
+html[data-mode="minimal"] .card-media{outline:1px solid transparent;outline-offset:6px;transition:transform .6s var(--ease-out),outline-color .4s}
+html[data-mode="minimal"] .card-link:hover .card-media,html[data-mode="minimal"] .card-link:focus-visible .card-media{outline-color:var(--bone)}
+html[data-mode="minimal"] .card-next .next-box{border:1px dashed var(--line)}
+html[data-mode="minimal"] .art-label{background:rgba(236,229,216,.92);color:var(--bone)}
+html[data-mode="minimal"] .case{background:var(--void)}
+html[data-mode="minimal"] .case-bar{background:rgba(236,229,216,.94)}
+html[data-mode="minimal"] .cs-hero-media .cs-fig::after{background:linear-gradient(transparent,rgba(236,229,216,.92))}
+html[data-mode="minimal"] .cs-group h4 .mono{background:var(--bone);color:var(--void)}
+html[data-mode="minimal"] .lb{background:var(--void)}
+html[data-mode="minimal"] .lb-nav{background:var(--paper)}
+html[data-mode="minimal"] .lb-nav:hover{border-color:var(--bone);color:var(--bone)}
+
+/* Chapter III */
+html[data-mode="minimal"] .sleeve .cover{color:var(--bone);border:1px solid var(--line)}
+html[data-mode="minimal"] .sleeve .vinyl{filter:grayscale(1) invert(.08)}
+html[data-mode="minimal"] .st-tape b{background:var(--bone);color:var(--void);transform:none}
+html[data-mode="minimal"] .st-outline b{-webkit-text-stroke-color:var(--bone)}
+html[data-mode="minimal"] .st-outline b::before{background:repeating-linear-gradient(90deg,var(--bone) 0 8px,transparent 8px 13px)}
+html[data-mode="minimal"] .st-spray b,html[data-mode="minimal"] .st-marker b{transform:none;font-style:italic}
+html[data-mode="minimal"] .origin p:first-child::first-letter{color:var(--bone)}
+
+/* Chapter IV */
+html[data-mode="minimal"] .artefact{--rot:0deg!important;--dy:0px!important}
+html[data-mode="minimal"] .artefact .am{outline:1px solid var(--line);outline-offset:-1px}
+html[data-mode="minimal"] .artefact:hover,html[data-mode="minimal"] .artefact:focus-within{transform:translateY(-6px)}
+html[data-mode="minimal"] .a-sticker .am{border:1px solid var(--bone);border-radius:6px}
+html[data-mode="minimal"] .a-photography{background:var(--paper);border:1px solid var(--line)}
+html[data-mode="minimal"] .a-photography figcaption,html[data-mode="minimal"] .a-photography figcaption span:last-child{color:var(--bone)}
+html[data-mode="minimal"] .artefact .set-count{background:rgba(236,229,216,.92);color:var(--bone)}
+html[data-mode="minimal"] .a-cooking .am{background:var(--midnight);border:1px dashed var(--line)}
+html[data-mode="minimal"] .oven{border:1px solid var(--bone);background:radial-gradient(circle at 50% 78%,#b9b0a0,#e3dbcc 70%)}
+html[data-mode="minimal"] .oven::after{display:none}
+html[data-mode="minimal"] .oven i{border-color:var(--bone);background:transparent}
+html[data-mode="minimal"] .burner{fill:var(--bone);filter:none}
+html[data-mode="minimal"] .a-cooking .stamp{transform:none;background:var(--bone);color:var(--void)}
+html[data-mode="minimal"] .exp-title .lbl{transform:none;background:transparent;color:var(--bone);border:1px solid var(--bone)}
+
+/* Chapter V and footer */
+html[data-mode="minimal"] .ch-contact::before{background:repeating-radial-gradient(circle,transparent 0 38px,rgba(20,18,16,.06) 38px 40px)}
+
+/* Map */
+html[data-mode="minimal"] .map{background:rgba(236,229,216,.98)}
+html[data-mode="minimal"] .map-svg .contour,html[data-mode="minimal"] .map-svg .contour.c2,html[data-mode="minimal"] .map-svg .contour.c3{stroke:rgba(20,18,16,.14)}
+html[data-mode="minimal"] .map-svg .stars circle{fill:#8a8378}
+html[data-mode="minimal"] .node-glyph{outline:1px solid var(--bone);outline-offset:5px}
+html[data-mode="minimal"] .node:hover,html[data-mode="minimal"] .node:focus-visible{transform:translateY(-3px)}
+
+/* custom cursor */
+html[data-mode="minimal"] .cursor{border-width:1px}
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -686,6 +827,9 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
       <span class="hand" aria-hidden="true">music starts when you step in</span>
     </div>
   </div>
+  <button class="mode-toggle gate-mode" role="switch" aria-checked="false" data-mode-toggle aria-label="Minimal mode" title="Minimal mode: beige and black">
+    <span class="mt-track" aria-hidden="true"><span class="mt-thumb"></span></span><span class="mt-label">Minimal</span>
+  </button>
   <a class="gate-down" href="#gate-map" id="gate-down">Scroll for the map<i aria-hidden="true">↓</i></a>
  </div>
  <section class="gate-map" id="gate-map" aria-labelledby="gate-map-title">
@@ -722,6 +866,9 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
         <p class="sp-note">Generated live in your browser. Starts with your first click; pick Off for silence.</p>
       </div>
     </div>
+    <button class="mode-toggle" role="switch" aria-checked="false" data-mode-toggle aria-label="Minimal mode" title="Minimal mode: beige and black">
+      <span class="mt-track" aria-hidden="true"><span class="mt-thumb"></span></span><span class="mt-label">Minimal</span>
+    </button>
     <button class="map-btn" id="map-open" aria-haspopup="dialog" aria-controls="map">
       <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M8 22 36 10 64 22 92 10V78L64 90 36 78 8 90Z M36 10V78 M64 22V90"/></svg>
       Map
@@ -1284,7 +1431,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
     gateOpen = false;
     store.set("entered", "1");
     const done = () => { gate.hidden = true; setInert(false); lock(false); if (!location.hash) scrollTo(0, 0); $("#world-h").focus({ preventScroll: true }); };
-    if (reduced() || !useFlash) { done(); return; }
+    if (reduced() || !useFlash || html.dataset.mode === "minimal") { done(); return; }
     const f = $("#portal-flash");
     const r = $("#gate-enter").getBoundingClientRect();
     const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -1815,6 +1962,23 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
           });
         }
       },
+      gallery: {
+        name: "Gallery hush", desc: "Soft air and slow, distant tones",
+        build(k) {
+          // room air: low, filtered noise that breathes slowly
+          const air = k.gain(.012); k.lfo(.05, .006, air.gain);
+          k.loopNoise(k.filter("lowpass", 420, air));
+          // a warm, open chord held underneath
+          [87.31, 130.81, 174.61, 220, 261.63].forEach((f, i) => {
+            const g = k.gain(.009); k.lfo(.02 + i * .011, .006, g.gain);
+            k.osc("sine", f, k.filter("lowpass", 900, g), i * 2);
+          });
+          // now and then, one soft note in a far-away room
+          const room = k.echo(1.4, .5, .45, k.filter("lowpass", 2200, k.gain(.8)));
+          const notes = [349.23, 392, 440, 523.25, 587.33, 698.46];
+          k.chance(900, .16, t => k.tone(t, room, notes[Math.floor(Math.random() * notes.length)], .022, .9, 7, "triangle"));
+        }
+      },
       cosmic: {
         name: "Cosmic drift", desc: "Slow pads and shimmering stars",
         build(k) {
@@ -1870,9 +2034,15 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
     soundBtn.classList.toggle("is-playing", id !== "off");
     $(".sound-label", soundBtn).textContent = id === "off" ? "Sound off" : Sound.tracks[id].name;
     if (id !== "off") lastTrack = id;
+    if (id !== "off" && id !== "gallery") { lastExpressive = id; store.set("soundExp", id); }
     syncVinyl();
   }
-  let lastTrack = U.defaultSound && Sound.tracks[U.defaultSound] ? U.defaultSound : "lofi";
+  const isMin = () => html.dataset.mode === "minimal";
+  const defaultTrack = U.defaultSound && Sound.tracks[U.defaultSound] ? U.defaultSound : "lofi";
+  let lastTrack = defaultTrack;
+  let lastExpressive = Sound.tracks[store.get("soundExp")] ? store.get("soundExp") : defaultTrack;
+  // the track to resume: the quiet Gallery track in Minimal Mode, otherwise the last one chosen
+  const resumeTrack = () => isMin() ? "gallery" : (lastTrack === "gallery" ? lastExpressive : lastTrack);
   const vinyl = $("#vinyl");
   function syncVinyl() {
     const on = soundNow !== "off" && !pendingStart;
@@ -1886,13 +2056,15 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
   // A visitor who picks Off stays silent for the rest of their visit, refreshes included.
   var pendingStart = false;
   const chosen = store.get("sound");
-  const startWith = chosen && (chosen === "off" || Sound.tracks[chosen]) ? chosen
+  let startWith = chosen && (chosen === "off" || Sound.tracks[chosen]) ? chosen
     : (U.defaultSound && Sound.tracks[U.defaultSound] ? U.defaultSound : "off");
+  // Minimal Mode starts with the Gallery track (unless the visitor chose Off)
+  if (startWith !== "off") startWith = isMin() ? "gallery" : (startWith === "gallery" && chosen === "gallery" && store.get("soundMode") === "minimal" ? lastExpressive : startWith);
   if (startWith !== "off") {
     pendingStart = true;
     showTrack(startWith);
     const kick = e => {
-      if (!pendingStart || (e && e.target.closest && e.target.closest("#vinyl"))) return;
+      if (!pendingStart || (e && e.target.closest && e.target.closest("#vinyl, [data-mode-toggle]"))) return;
       pendingStart = false;
       ["click", "keydown", "touchend"].forEach(t => removeEventListener(t, kick, true));
       if (soundNow !== "off" && !Sound.play(soundNow)) showTrack("off");
@@ -1904,7 +2076,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
     const on = soundNow !== "off" && !pendingStart;
     pendingStart = false;
     if (on) { Sound.stop(); store.set("sound", "off"); showTrack("off"); }
-    else if (Sound.play(lastTrack)) { store.set("sound", lastTrack); showTrack(lastTrack); }
+    else { const t = resumeTrack(); if (Sound.play(t)) { store.set("sound", t); showTrack(t); } }
   });
   $("#sp-list").addEventListener("click", e => {
     const b = e.target.closest(".sp-opt"); if (!b) return;
@@ -1916,6 +2088,38 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
     showTrack(id);
   });
   $("#sp-vol").addEventListener("input", e => Sound.setVolume(e.target.value / 100));
+
+  /* ---------- Minimal Mode ---------- */
+  // One global theme switch: the same page, re-dressed in beige and black.
+  // Saved in the browser so it holds across chapters, refreshes and later visits.
+  const modeToggles = $$("[data-mode-toggle]");
+  const metaTheme = $('meta[name="theme-color"]');
+  function paintMode(on) {
+    if (on) html.dataset.mode = "minimal"; else delete html.dataset.mode;
+    modeToggles.forEach(t => t.setAttribute("aria-checked", String(on)));
+    if (metaTheme) metaTheme.content = on ? "#ece5d8" : "#08061c";
+  }
+  paintMode(isMin());
+  // Music follows the mode: Minimal fades to the Gallery track and back again.
+  // If the visitor chose Off, it stays off.
+  function modeMusic(on) {
+    if (soundNow === "off") return;
+    const target = on ? "gallery" : lastExpressive;
+    store.set("soundMode", on ? "minimal" : "expressive");
+    if (target === soundNow && !pendingStart) return;
+    pendingStart = false;
+    if (Sound.play(target)) { store.set("sound", target); showTrack(target); }
+  }
+  function setMode(on) {
+    if (on === isMin()) return;
+    try { localStorage.setItem("hk-mode", on ? "minimal" : "expressive"); } catch (e) {}
+    const swap = () => paintMode(on);
+    if (reduced()) swap();
+    else if (document.startViewTransition) document.startViewTransition(swap);
+    else { html.classList.add("mode-fade"); swap(); setTimeout(() => html.classList.remove("mode-fade"), 800); }
+    modeMusic(on);
+  }
+  modeToggles.forEach(t => t.addEventListener("click", () => setMode(!isMin())));
   document.addEventListener("click", e => { if (!soundPanel.hidden && !e.target.closest(".sound-wrap")) setPanel(false); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !soundPanel.hidden) { setPanel(false); soundBtn.focus(); } });
 
