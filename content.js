@@ -388,7 +388,7 @@ window.UNIVERSE = {
           "reflection"
         ],
         images: {
-          hero: { src: "img/explorations/ex-hero.jpg", alt: "WALK, Zeus and Durga Avtar side by side" },
+          hero: { src: "img/explorations/ex-hero.webp", alt: "Seven of the explorations spread like prints on a table: Spiderman, WALK, ISS, Zeus, Durga Avtar, Fight Back and Sailor" },
           brief: []
         }
       }
