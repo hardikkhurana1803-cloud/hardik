@@ -376,10 +376,11 @@ window.UNIVERSE = {
           },
           {
             title: "Covers & colourways",
-            text: "Sailor sets a polaroid in the pocket of a striped shirt, inverted into magenta and cyan. Spiderman is the same composition in two moods, cool violet and burnt orange, with the hero's head breaking through the letters of his own name.",
-            cols: 3,
+            text: "Sailor sets a polaroid in the pocket of a striped shirt, inverted into magenta and cyan. ISS turns the Moon into a halftone print in acid cyan and green, with the space station picked out by a dashed red circle. Spiderman is the same composition in two moods, cool violet and burnt orange, with the hero's head breaking through the letters of his own name.",
+            cols: 2,
             images: [
               { src: "img/explorations/ex-sailor.jpg", ratio: "4:5", alt: "Sailor cover: a striped shirt in magenta and cyan with a polaroid in the pocket" },
+              { src: "img/explorations/ex-iss.jpg", ratio: "4:5", alt: "ISS poster: the Moon as a cyan and green halftone, the space station circled in red, ISS set across the top" },
               { src: "img/explorations/ex-spiderman.jpg", ratio: "1:1", alt: "Spiderman in violet and blue, his head overlapping the title" },
               { src: "img/explorations/ex-untitled.jpg", ratio: "1:1", alt: "Spiderman in dark red and orange, his head overlapping the title" }
             ]
