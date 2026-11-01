@@ -473,7 +473,7 @@ window.UNIVERSE = {
   showPlaceholders: false,
 
   /* ---------- Chapter IV: Experiments ----------
-     type   typography | photography | poster | study | motion | unreleased | packaging | sticker
+     type   typography | photography | poster | study | motion | unreleased | packaging | sticker | cover
      glyph  (typography only) the characters shown on the specimen
      image  optional cover image path
      images optional list of { src, alt }: clicking the piece opens them full-screen
@@ -516,6 +516,17 @@ window.UNIVERSE = {
         { src: "img/experiments/coke-india-01.jpg", alt: "A chilled Coca-Cola can with an Indian skyline of palaces, temples and the Taj Mahal printed in white around its base" },
         { src: "img/experiments/coke-india-02.jpg", alt: "The can from four sides: the logo, Recycle Me, an elephant above the palaces, and the nutrition panel" },
         { src: "img/experiments/coke-india-03.jpg", alt: "Flat wrap artwork: the Coca-Cola script, a camel, an elephant and Indian landmarks in white on red" }
+      ]
+    },
+    {
+      type: "cover", title: "Memory", year: "2026",
+      palette: ["#f29a2e", "#e46a8f", "#1d0d10"],
+      image: "img/experiments/memory-dvd-01.jpg",
+      images: [
+        { src: "img/experiments/memory-dvd-01.jpg", alt: "Memory DVD cover: a girl's profile in orange, filled with sun-washed pink snapshots of young love, MEMORY in script across the top" },
+        { src: "img/experiments/memory-dvd-02.jpg", alt: "The DVD case and disc standing among candles, roses and old books" },
+        { src: "img/experiments/memory-dvd-03.jpg", alt: "The Memory DVD case on a wooden table in warm candlelight" },
+        { src: "img/experiments/memory-dvd-04.jpg", alt: "Collage of mockups: front, back with the tagline 'Some moments fade, but the feeling never does', disc, spine and a close-up" }
       ]
     },
     { type: "motion",      title: "Untitled loop",         year: "YYYY", palette: ["#8b3dff", "#c6ff1a", "#0b0820"], motif: "eye", image: "" },

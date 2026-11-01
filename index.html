@@ -477,7 +477,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .artefact figcaption{display:grid;gap:2px;margin-top:14px;font-size:.9rem}
 .artefact figcaption .mono{color:var(--acid)}
 .artefact figcaption span:last-child{color:var(--dim)}
-.a-poster{width:clamp(200px,22vw,270px)}.a-poster .am{aspect-ratio:3/4}
+.a-poster,.a-cover{width:clamp(200px,22vw,270px)}.a-poster .am,.a-cover .am{aspect-ratio:3/4}
 .a-photography{width:clamp(210px,20vw,250px);background:var(--bone);padding:10px 10px 0}.a-photography .am{aspect-ratio:1;box-shadow:none}
 .a-photography figcaption{color:var(--ink);padding:4px 4px 12px;font-family:var(--f-hand);font-size:1rem}
 .a-photography figcaption .mono{color:var(--violet);font-family:var(--f-mono)}
@@ -1213,8 +1213,8 @@ html[data-mode="minimal"] .cursor{border-width:1px}
   $("#approach").innerHTML = (L.approach || []).map((s, i) => `<li><span class="rn" aria-hidden="true">${ROMAN[i] || i + 1}.</span><b>${esc(s.name)}</b><p>${esc(s.text)}</p></li>`).join("");
 
   /* ---------- experiments ---------- */
-  const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept", packaging: "Packaging concept", sticker: "Sticker poster" };
-  const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3", packaging: "1:1", sticker: "1:1" };
+  const TYPE_LABEL = { typography: "Experimental type", photography: "Photography", poster: "Poster", study: "Visual study", motion: "Motion", unreleased: "Unreleased concept", packaging: "Packaging concept", sticker: "Sticker poster", cover: "Cover design" };
+  const RATIO_EXP = { typography: "1:1", photography: "1:1", poster: "3:4", study: "1:1", motion: "16:9", unreleased: "4:3", packaging: "1:1", sticker: "1:1", cover: "3:4" };
   let EXP = (U.experiments || []).filter(e => U.showPlaceholders || e.image || (e.images && e.images.length)).map((e, i) => ({ ...e, n: i + 1 }));
   const seeded = (i, s) => { const x = Math.sin(i * 12.9898 + s * 78.233) * 43758.5453; return x - Math.floor(x); };
   let shuffleSeed = 1;
@@ -1231,7 +1231,7 @@ html[data-mode="minimal"] .cursor{border-width:1px}
     const extra = e.type === "motion" ? `<span class="scan" aria-hidden="true"></span><span class="play" aria-hidden="true">▶ Loop</span>`
       : e.type === "unreleased" ? `` : "";
     const seal = e.type === "unreleased" ? `<span class="seal" aria-hidden="true">Sealed</span>` : "";
-    const tape = (e.type === "poster" || e.type === "typography" || e.type === "sticker") ? `<span class="tape" aria-hidden="true"></span>` : "";
+    const tape = (e.type === "poster" || e.type === "typography" || e.type === "sticker" || e.type === "cover") ? `<span class="tape" aria-hidden="true"></span>` : "";
     const set = Array.isArray(e.images) && e.images.length ? e.images : null;
     const open = set ? ` has-set" tabindex="0" role="button" data-exp="${i}" aria-label="${esc(e.title)}: open ${set.length} image${set.length > 1 ? "s" : ""}` : "";
     const count = set && set.length > 1 ? `<span class="set-count" aria-hidden="true">${pad(set.length)} images</span>` : "";
