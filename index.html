@@ -464,7 +464,6 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .ch-exp{padding-block:clamp(36px,5vw,80px)}
 .exp-head{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between;margin-bottom:30px}
 .exp-title{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.82;font-size:clamp(3.2rem,9vw,8.5rem)}
-.exp-title .lbl{display:inline-block;background:var(--bone);color:var(--ink);padding:.02em .14em;transform:rotate(-2deg);font-size:.42em;vertical-align:middle;font-family:var(--f-mono);font-weight:500;letter-spacing:.06em}
 .exp-title .acid{color:var(--acid)}
 .exp-intro{margin:10px 0 0;max-width:42ch;color:var(--dim)}
 .exp-controls{display:flex;gap:8px}
@@ -776,7 +775,6 @@ html[data-mode="minimal"] .oven::after{display:none}
 html[data-mode="minimal"] .oven i{border-color:var(--bone);background:transparent}
 html[data-mode="minimal"] .burner{fill:var(--bone);filter:none}
 html[data-mode="minimal"] .a-cooking .stamp{transform:none;background:var(--bone);color:var(--void)}
-html[data-mode="minimal"] .exp-title .lbl{transform:none;background:transparent;color:var(--bone);border:1px solid var(--bone)}
 
 /* Chapter V and footer */
 html[data-mode="minimal"] .ch-contact::before{background:repeating-radial-gradient(circle,transparent 0 38px,rgba(20,18,16,.06) 38px 40px)}
@@ -952,7 +950,7 @@ html[data-mode="minimal"] .cursor{border-width:1px}
       <p class="ch-tag"><span class="num">Chapter IV</span><span class="spray">Experiments</span></p>
       <div class="exp-head">
         <div>
-          <h2 class="exp-title rv split" id="exp-h">The <span class="acid">lab</span> <span class="lbl">Archive of loose ends</span></h2>
+          <h2 class="exp-title rv split" id="exp-h">The <span class="acid">lab</span></h2>
           <p class="exp-intro">Type studies, frames, posters, loops and ideas that never shipped. Artefacts picked up on the way between worlds.</p>
         </div>
         <div class="exp-controls">
