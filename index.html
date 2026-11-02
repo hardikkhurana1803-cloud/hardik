@@ -344,7 +344,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .showcase-link:hover .showcase-cta{transform:translateX(8px) rotate(-3deg)}
 
 /* ---------- Case study (project world) ---------- */
-.case{position:fixed;inset:0;z-index:90;background:radial-gradient(70% 50% at 80% 0%,color-mix(in srgb,var(--c1) 35%,transparent),transparent 70%),var(--c3);color:var(--bone);
+.case{--cs-line:rgba(243,238,226,.4);position:fixed;inset:0;z-index:90;background:radial-gradient(70% 50% at 80% 0%,color-mix(in srgb,var(--c1) 35%,transparent),transparent 70%),var(--c3);color:var(--bone);
   clip-path:circle(0px at var(--ox,50%) var(--oy,50%));transition:clip-path .85s var(--ease-io);display:flex;flex-direction:column}
 .case.is-open{clip-path:circle(150vmax at var(--ox,50%) var(--oy,50%))}
 .case-bar{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top,0px)) var(--gr) 12px var(--gl);border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--c3) 85%,transparent)}
@@ -363,17 +363,17 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .cs-kicker{color:var(--c1);margin:0}
 .cs-title{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.8;font-size:clamp(3.4rem,12vw,11rem);text-wrap:balance;outline:none}
 .cs-realm{margin:0;font-family:var(--f-serif);font-style:italic;font-size:clamp(1.5rem,3vw,2.4rem);color:var(--c2)}
-.cs-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin:26px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+.cs-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin:26px 0 0;padding-top:20px;border-top:2px solid var(--cs-line)}
 .cs-meta dt{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 .cs-meta dd{margin:4px 0 0;font-weight:500}
 .cs-meta .tags{margin:4px 0 0}
 .cs-fig{position:relative;margin:0;max-width:100%;overflow:hidden}
 .cs-group{display:grid;gap:16px;min-width:0}
-.cs-group + .cs-group{padding-top:clamp(28px,4vw,48px);border-top:1px dashed var(--line)}
+.cs-group + .cs-group{padding-top:clamp(28px,4vw,48px);border-top:2px dashed var(--cs-line)}
 .cs-group h4{margin:0;display:flex;align-items:baseline;gap:12px;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(1.5rem,2.4vw,2.1rem);line-height:1}
 .cs-group h4 .mono{display:grid;place-items:center;width:28px;height:28px;background:var(--c1);color:var(--ink);font-size:.8rem;flex:none}
 .cs-note{margin:0 0 clamp(24px,4vw,40px);padding:12px 14px;border:1px dashed var(--line);color:var(--dim);max-width:70ch;text-transform:none;letter-spacing:.02em;line-height:1.5}
-.cs-sec{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px clamp(16px,2.4vw,36px);padding-block:clamp(40px,6vw,90px);border-top:1px solid var(--line)}
+.cs-sec{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px clamp(16px,2.4vw,36px);padding-block:clamp(40px,6vw,90px);border-top:2px solid var(--cs-line)}
 .cs-sec h3{grid-column:1/5;margin:0;display:flex;flex-direction:column;gap:6px;text-wrap:balance;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(1.8rem,3vw,2.8rem);line-height:.9}
 .cs-num{font-family:var(--f-mono);font-weight:400;font-size:.75rem;letter-spacing:.12em;color:var(--c1)}
 .cs-body{grid-column:5/-1;display:grid;gap:20px;min-width:0}
@@ -384,7 +384,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .cs-grid .full{grid-column:1/-1}
 .cs-even{align-items:start}
 .cs-quote{font-family:var(--f-serif);font-style:italic;font-size:clamp(1.8rem,4vw,3.6rem)!important;line-height:1.08;max-width:24ch!important;color:var(--c2)}
-.cs-next{display:block;text-decoration:none;padding-block:clamp(50px,8vw,120px);border-top:1px solid var(--line)}
+.cs-next{display:block;text-decoration:none;padding-block:clamp(50px,8vw,120px);border-top:2px solid var(--cs-line)}
 .cs-next .mono{color:var(--dim)}
 .cs-next strong{display:block;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.85;font-size:clamp(2.6rem,8vw,7rem);transition:color .4s,letter-spacing .6s var(--ease-out)}
 .cs-next:hover strong{color:var(--c1);letter-spacing:.02em}
@@ -741,7 +741,7 @@ html[data-mode="minimal"] .card-media{outline:1px solid transparent;outline-offs
 html[data-mode="minimal"] .card-link:hover .card-media,html[data-mode="minimal"] .card-link:focus-visible .card-media{outline-color:var(--bone)}
 html[data-mode="minimal"] .card-next .next-box{border:1px dashed var(--line)}
 html[data-mode="minimal"] .art-label{background:rgba(236,229,216,.92);color:var(--bone)}
-html[data-mode="minimal"] .case{background:var(--void)}
+html[data-mode="minimal"] .case{background:var(--void);--cs-line:rgba(20,18,16,.38)}
 html[data-mode="minimal"] .case-bar{background:rgba(236,229,216,.94)}
 html[data-mode="minimal"] .cs-hero-media .cs-fig::after{background:linear-gradient(transparent,rgba(236,229,216,.92))}
 html[data-mode="minimal"] .cs-hero-media .img-slot{background:transparent}
