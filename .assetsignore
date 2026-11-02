@@ -1,0 +1,9 @@
+# Kept out of the published site (Cloudflare reads this list)
+.git
+.gitignore
+.assetsignore
+.nojekyll
+build.ps1
+HOW-TO-PUBLISH.md
+site
+jarvis
