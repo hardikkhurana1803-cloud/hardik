@@ -457,7 +457,8 @@ window.UNIVERSE = {
   ],
 
   // Shows a "next world" slot at the end of the grid. Set to "" to hide it.
-  nextWorldNote: "A new world is forming. Check back soon.",
+  // Hidden for now. To bring it back: nextWorldNote: "A new world is forming. Check back soon.",
+  nextWorldNote: "",
 
   // Set to true to show the Experiments chapter (and its stop on the map) again
   showExperiments: true,
