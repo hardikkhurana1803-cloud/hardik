@@ -245,7 +245,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 @keyframes shimmer{to{background-position:-150% 0}}
 
 /* ---------- Chapter I: The World ---------- */
-.ch-world{padding-top:calc(110px + env(safe-area-inset-top,0px));padding-bottom:clamp(60px,8vw,120px)}
+.ch-world{padding-top:calc(110px + env(safe-area-inset-top,0px));padding-bottom:clamp(28px,4vw,60px)}
 .world-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px clamp(16px,2vw,32px);align-items:start}
 .world-grid .ch-tag{grid-column:1/-1}
 .world-title{grid-column:1/10;grid-row:2/4;margin:0;position:relative;z-index:2;font-weight:400;line-height:.86;text-wrap:balance}
@@ -282,7 +282,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .stk:nth-child(5n+5){background:linear-gradient(160deg,#fff,#a7a9cc 45%,#f3f3fb 60%,#7c7ea6);color:var(--ink);--r:-5deg}
 .world-float{position:absolute;pointer-events:none;z-index:1}
 /* tapes (marquee) */
-.tapes{position:relative;height:clamp(150px,18vw,220px);overflow:hidden;margin-block:clamp(20px,4vw,60px)}
+.tapes{position:relative;height:clamp(150px,18vw,220px);overflow:hidden;margin-block:clamp(8px,2vw,32px)}
 .tape-band{position:absolute;left:-5%;width:110%;top:50%;display:flex;overflow:hidden;padding-block:12px;font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(1.4rem,3vw,2.4rem);line-height:1;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.4)}
 .tape-a{background:var(--acid);color:var(--ink);transform:translateY(-70%) rotate(-3deg);z-index:2}
 .tape-b{background:var(--magenta);color:var(--ink);transform:translateY(-10%) rotate(2.5deg)}
@@ -293,7 +293,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 @keyframes marq{to{transform:translateX(-100%)}}
 
 /* ---------- Chapter II: Projects ---------- */
-.ch-projects{padding-block:clamp(40px,6vw,90px) clamp(80px,10vw,160px)}
+.ch-projects{padding-block:clamp(24px,3.5vw,52px) clamp(48px,6vw,96px)}
 .proj-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px 24px;align-items:end;margin-bottom:clamp(40px,7vw,100px)}
 .proj-head .ch-tag{grid-column:1/-1}
 .proj-title{grid-column:1/9;margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.8;font-size:clamp(4rem,13vw,13rem);letter-spacing:-.015em}
@@ -414,7 +414,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 }
 
 /* ---------- Chapter III: Lore ---------- */
-.ch-lore{padding-block:clamp(70px,10vw,160px)}
+.ch-lore{padding-block:clamp(44px,6vw,96px)}
 .lore-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:40px clamp(16px,2.6vw,40px)}
 .lore-left{grid-column:1/6;align-self:start;position:sticky;top:110px;display:grid;gap:22px}
 .lore-title{margin:0;font-family:var(--f-serif);font-weight:400;font-size:clamp(2.8rem,6.4vw,6rem);line-height:.95;text-wrap:balance}
@@ -458,7 +458,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .approach p{margin:0;color:var(--dim);max-width:48ch}
 
 /* ---------- Chapter IV: Experiments ---------- */
-.ch-exp{padding-block:clamp(60px,8vw,130px)}
+.ch-exp{padding-block:clamp(36px,5vw,80px)}
 .exp-head{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:flex-end;justify-content:space-between;margin-bottom:30px}
 .exp-title{margin:0;font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.82;font-size:clamp(3.2rem,9vw,8.5rem)}
 .exp-title .lbl{display:inline-block;background:var(--bone);color:var(--ink);padding:.02em .14em;transform:rotate(-2deg);font-size:.42em;vertical-align:middle;font-family:var(--f-mono);font-weight:500;letter-spacing:.06em}
@@ -522,7 +522,7 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .shelf-hint{margin:0;color:var(--dim)}
 
 /* ---------- Chapter V: Contact ---------- */
-.ch-contact{padding-block:clamp(80px,12vw,180px) clamp(40px,6vw,80px);overflow:hidden}
+.ch-contact{padding-block:clamp(52px,7vw,110px) clamp(40px,6vw,80px);overflow:hidden}
 .ch-contact::before{content:"";position:absolute;left:50%;top:44%;width:180vmax;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;z-index:-1;
   background:repeating-radial-gradient(circle,transparent 0 38px,rgba(217,219,232,.08) 38px 40px);
   -webkit-mask:radial-gradient(circle,#000 0 18%,transparent 45%);mask:radial-gradient(circle,#000 0 18%,transparent 45%);animation:pulse 9s ease-in-out infinite}
