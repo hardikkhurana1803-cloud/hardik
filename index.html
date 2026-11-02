@@ -380,6 +380,9 @@ button.sticker-round:focus-visible{outline:3px solid var(--acid);outline-offset:
 .cs-body p{margin:0;max-width:62ch;font-size:1.05rem}
 .cs-lede{font-family:var(--f-serif);font-size:clamp(1.5rem,2.8vw,2.3rem)!important;line-height:1.2;max-width:30ch!important}
 .cs-grid{display:grid;gap:14px;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
+.cs-row{display:flex;gap:14px;align-items:flex-start}
+.cs-row .cs-fig{min-width:0}
+@media (max-width:600px){.cs-row{gap:8px}}
 .cs-grid .span2{grid-column:span 2}
 .cs-grid .full{grid-column:1/-1}
 .cs-even{align-items:start}
@@ -1588,6 +1591,11 @@ html[data-mode="minimal"] .cursor{border-width:1px}
       const real = (list || []).map(img).filter(o => o.src);
       if (!real.length) return fallback;
       const n = real.length, ratio = opt.ratio || R;
+      // layout "row": one justified row, every image the same height, each as wide as its own shape needs (nothing cropped)
+      if (opt.layout === "row") return `<div class="cs-row">${real.map((o, k) => {
+        const rt = o.ratio || ratio, [w, h] = rt.split(":").map(Number);
+        return slot(o, `${label} ${k + 1}`, rt, "", null).replace('style="aspect-ratio:', `style="flex:${(w / h).toFixed(4)} 1 0;aspect-ratio:`);
+      }).join("")}</div>`;
       if (opt.cols) return `<div class="cs-grid cs-even" style="--cols:${+opt.cols}">${real.map((o, k) => slot(o, `${label} ${k + 1}`, o.ratio || ratio)).join("")}</div>`;
       return `<div class="cs-grid" style="--cols:2">${real.map((o, k) =>
         slot(o, `${label} ${k + 1}`, o.ratio || ratio, k === 0 || ((n - 1) % 2 === 1 && k === n - 1) ? "full" : "")).join("")}</div>`;

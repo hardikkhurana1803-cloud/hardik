@@ -422,7 +422,7 @@ window.UNIVERSE = {
           {
             title: "Gold",
             text: "Golden hour in the desert, when dust turns the air to light. Camels, trees and people reduced to silhouettes against a sky the colour of sand.",
-            cols: 2,
+            layout: "row",
             images: [
               { src: "img/photography/ph-05.jpg", ratio: "4:3", alt: "A camel in silhouette in a dusty golden desert at sunset, a person seated nearby" },
               { src: "img/photography/ph-06.jpg", ratio: "3:4", alt: "Camels resting together in silhouette against an orange haze" }
@@ -431,7 +431,7 @@ window.UNIVERSE = {
           {
             title: "Shadow",
             text: "The other end of the day. Figures walking a tilted shoreline, a rider under a starless sky, two small lamps holding back a whole night.",
-            cols: 3,
+            layout: "row",
             images: [
               { src: "img/photography/ph-03.jpg", ratio: "3:4", alt: "Silhouetted people walking along a shoreline shot at a steep diagonal" },
               { src: "img/photography/ph-07.jpg", ratio: "728:1600", alt: "A person on a scooter lit by a single light under a dark night sky" },
@@ -441,7 +441,7 @@ window.UNIVERSE = {
           {
             title: "Detail",
             text: "Up close. The eye of a peacock feather, and a product shot made with nothing but fairy lights and a shallow focus.",
-            cols: 2,
+            layout: "row",
             images: [
               { src: "img/photography/ph-01.jpg", ratio: "3:4", alt: "Close-up of a peacock feather's iridescent eye" },
               { src: "img/photography/ph-04.jpg", ratio: "1600:1105", alt: "A lip balm tube in front of warm golden bokeh" }
